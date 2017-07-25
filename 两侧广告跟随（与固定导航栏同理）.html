@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>两侧广告跟随</title>
+    <style>
+
+        .img1 {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+        }
+
+        .img2 {
+            position: absolute;
+            top: 80px;
+            right: 10px;
+        }
+
+        .body_img {
+            width: 90%;
+            height: 5000px;
+            text-align: center;
+        }
+
+        .body_img li {
+            list-style: none;
+            margin-top: 100px;
+        }
+
+    </style>
+    <script src="js/my.js"></script>
+</head>
+<body>
+
+    <img class="img1" src="imgs/side_ad.jpg">
+    <img class="img2" src="imgs/side_ad.jpg">
+    <div class="body_img" id="body_img">
+        <ul>
+            <li><img src="imgs/pic1.jpg"></li>
+            <li><img src="imgs/pic2.jpg"></li>
+            <li><img src="imgs/pic3.png"></li>
+            <li><img src="imgs/pic4.jpg"></li>
+            <li><img src="imgs/pic5.jpg"></li>
+            <li><img src="imgs/pic1.jpg"></li>
+            <li><img src="imgs/pic2.jpg"></li>
+            <li><img src="imgs/pic3.png"></li>
+            <li><img src="imgs/pic4.jpg"></li>
+            <li><img src="imgs/pic5.jpg"></li>
+        </ul>
+    </div>
+
+    <script>
+
+        var imgArr = document.getElementsByTagName("img");
+
+        window.onscroll=function(){
+            //获取被卷去的头部的值
+            var val = scroll().top;
+            //移动两个盒子。（缓动移动）
+            animate_Y(imgArr[0],val+80);
+            animate_Y(imgArr[1],val+80);
+        }
+
+    </script>
+</body>
+</html>

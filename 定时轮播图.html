@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            width: 520px;
+            height: 280px;
+            padding: 5px;
+            border: 1px solid #cccccc;
+            margin: 100px auto;
+        }
+
+        .box {
+            width: 520px;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #ul {
+            width: 500%;
+            list-style: none;
+            position: absolute;
+            left: 0;
+        }
+
+        #ul>li {
+            float: left;
+        }
+
+        .square {
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+        }
+
+        span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .current {
+            background-color: #ff3805;
+            color: #ffffff;
+        }
+    </style>
+
+    <script src="js/my.js"></script>
+
+</head>
+<body>
+    <div id="all" class="all">
+        <div id="box" class="box">
+            <ul id="ul">
+                <li><img src="imgs/pic1.jpg"></li>
+                <li><img src="imgs/pic2.jpg"></li>
+                <li><img src="imgs/pic3.png"></li>
+                <li><img src="imgs/pic4.jpg"></li>
+                <li><img src="imgs/pic5.jpg"></li>
+            </ul>
+            <div class="square">
+                <span class="current">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var all = document.getElementById("all");
+        var box = document.getElementById("box");
+        var imgWidth = box.offsetWidth;
+        var ul = document.getElementById("ul");
+        var ulLiArr = ul.children;
+        var square = box.children[1];
+        var spanArr = square.children;
+        //循环绑定（自定义属性参数盒子的索引值）
+        for(var i=0;i<spanArr.length;i++){
+            //绑定的是索引值,为了移动盒子的时候方便。
+            spanArr[i].index=i;
+            //点亮鼠标经过的盒子
+            spanArr[i].onmouseover = function(){
+                for(var j=0;j<spanArr.length;j++){
+                    spanArr[j].className = "";
+                }
+                this.className = "current";
+                //鼠标放上去的时候pic和squareness的值要和他相等
+                pic = squareness = this.index;
+                //利用事先封装好的移动盒子的函数
+                animate_X(ul,-this.index*imgWidth);
+            }
+        }
+        //添加定时器
+        var timer = setInterval(autoPlay,1000);
+        //两个定时器，一个记录图片，一个记录小方块。
+        var pic = 0;
+        var squareness = 0;
+        function autoPlay(){
+            pic++;
+            //图片的索引值不能超过图片的数量，否则会出现bug。
+            if(pic>ulLiArr.length-1){
+                ul.style.left = 0;
+                pic = 0;
+            }
+            animate_X(ul,-pic*imgWidth);
+            squareness++;
+            if(squareness>spanArr.length-1){
+                squareness = 0;
+            }
+            for(var i=0;i<spanArr.length;i++){
+                spanArr[i].className = "";
+            }
+                spanArr[squareness].className = "current";
+        }
+        all.onmousemove = function () {
+            clearInterval(timer);
+        }
+        all.onmouseout = function () {
+            timer = setInterval(autoPlay,1000);
+        }
+
+    </script>
+</body>
+</html>

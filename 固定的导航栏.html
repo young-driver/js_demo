@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>固定的导航栏</title>
+    <style>
+
+        html {
+            font-size: 62.5%;
+            color: #222;
+        }
+
+        ::selection{
+            background-color: #b3d4fc;
+            text-shadow: none;
+        }
+
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+
+        .top_text {
+            width: 100%;
+            height: 100px;
+            font-family: 微软雅黑;
+            text-align: center;
+        }
+
+        .top_text>p {
+            color: #ff484b;
+            font-size: 5rem;
+            line-height: 100px;
+            letter-spacing: 2em;
+        }
+
+        body{
+            font-style: 1.2rem;
+            line-height: 1.5;
+            background-color: #f7f7f7;
+        }
+
+        a{
+            color: #666;
+            text-decoration: none;
+        }
+
+        a:hover,a:active{
+            color: #0ae;
+            text-decoration: underline;
+        }
+
+        header{
+            width: 100%;
+        }
+
+        header .top{
+            line-height: 3rem;
+            padding: 0 1.5rem;
+            color: #fff;
+            background-color: #555;
+            border-bottom: 1px #ecc000 solid;
+        }
+
+        header .top .tel{
+            float: left;
+        }
+
+        header .top ul{
+            text-align: right;
+        }
+
+        header .top ul li{
+            display:inline-block;
+        }
+
+        header .top ul li + li{
+            border-left: 1px solid #999;
+            margin-left: -3px;
+        }
+
+        header .top ul li a{
+            display: inline-block;
+            padding: 0 1.5rem;
+            color: #fff;
+        }
+
+        header .main{
+            padding: 0;
+        }
+
+        header .main .brand{
+            float: left;
+            padding: 0;
+        }
+
+        header .main ul{
+            text-align: right;
+        }
+
+        header .main ul li{
+            display: inline-block;
+            border-left: 1px solid #f0ede9;
+        }
+
+        header .main ul li a{
+            display: inline-block;
+            padding: 0 3rem;
+            line-height: 5.5rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #7c7a65;
+            text-decoration: none;
+        }
+
+        header .main ul li a:hover,
+        header .main ul li a:active,
+        header .main ul li a:active{
+            color: #ffb300;
+            background-color: #f8f6f1;
+        }
+
+        .trans-data span{
+            display: inline-block;
+            line-height: 3rem;
+            color: #fff;
+        }
+
+        .trans-report a{
+            display: inline-block;
+            line-height: 3rem;
+            padding: 1rem;
+            color: #fff;
+        }
+
+        .body_img {
+            width: 90%;
+            height: 5000px;
+            text-align: center;
+        }
+
+        .body_img li {
+            list-style: none;
+            margin-top: 100px;
+        }
+
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+
+    <script src="js/my.js"></script>
+
+</head>
+<body>
+
+    <div class="top_text" id="top_text">
+        <p>我是酱油君！</p>
+    </div>
+    <header id="box">
+        <nav class="top" id="top">
+            <span class="tel">购车热线：400-666-6666</span>
+            <ul>
+                <li><a href="#">登录</a></li>
+                <li><a href="#">快速注册</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">帮助</a></li>
+                <li><a href="#">APP下载</a></li>
+            </ul>
+        </nav>
+        <nav class="main">
+            <a href="#" class="brand"><img src="imgs/pic01.png" alt="回到首页"></a>
+            <ul>
+                <li><a href="#">首页</a></li>
+                <li><a href="#">购车频道</a></li>
+                <li><a href="#">售车频道</a></li>
+                <li><a href="#">新手指南</a></li>
+                <li><a href="#">服务保障</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="body_img" id="body_img">
+        <ul>
+            <li><img src="imgs/pic1.jpg"></li>
+            <li><img src="imgs/pic2.jpg"></li>
+            <li><img src="imgs/pic3.png"></li>
+            <li><img src="imgs/pic4.jpg"></li>
+            <li><img src="imgs/pic5.jpg"></li>
+        </ul>
+    </div>
+
+        <script>
+
+                var topText = document.getElementById("top_text");
+                var height = topText.offsetHeight;
+                var navTop = document.getElementById("box");
+                var bodyImg = document.getElementById("body_img");
+
+                window.onscroll = function () {
+                    //判断 ，被卷曲的头部的大小
+                    if(scroll().top > height){
+                        //满足条件添加类，否则删除类
+                        navTop.className += " fixed";
+                        //第二个盒子不占位置了，所以给第三个盒子一个上padding占位置，不出现盒子抖动问题
+                        bodyImg.style.paddingTop = navTop.offsetHeight+"px";
+                    }else{
+                        navTop.className = "";
+                        //清零
+                        bodyImg.style.paddingTop = 0;
+                    }
+                }
+
+        </script>
+</body>
+</html>
